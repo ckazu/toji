@@ -22,6 +22,40 @@ end
 
 commit "rails new #{app_name}"
 
+gsub_file 'Gemfile', /^group :doc do.*end$\n/m, ''
+gsub_file 'Gemfile', /^.*sass-rails.*\n/, ''
+
+gem 'rails-i18n', '~> 4.0.0.pre'
+gem 'haml-rails'
+gem 'less-rails'
+gem 'underscore-rails'
+gem 'underscore-string-rails'
+gem 'therubyracer', platforms: :ruby
+gem 'twitter-bootstrap-rails', branch: 'bootstrap3'
+
+run_bundle
+
+generate 'bootstrap:install less'
+insert_into_file 'app/assets/javascripts/application.js', "//= require underscore\n", before: '//= require_tree .'
+insert_into_file 'app/assets/javascripts/application.js', "//= require underscore.string\n", before: '//= require_tree .'
+
+remove_file 'app/views/layout/application.html.erb'
+# [ToDo] replace above template
+create_file 'app/views/layout/application.html.haml' do
+<<-TEMPLATE
+!!! html
+%head
+  %title #{app_name}
+  = stylesheet_link_tag 'application', media: :all, 'data-turbolinks-track' => true
+  = javascript_include_tag 'application', 'data-turbolinks-track' => true
+  = csrf_meta_tags
+%body
+  = yield
+TEMPLATE
+end
+
+commit "add libraly Gemfiles"
+
 # Gemfiles
 gem_group :development, :test do
   # rspec
