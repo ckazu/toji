@@ -39,7 +39,7 @@ gem_group :development, :test do
   gem 'binding_of_caller'
 end
 
-run 'bundle install'
+run_bundle
 generate 'rspec:install'
 run 'bundle exec guard init rspec'
 commit "add development Gemfiles"
