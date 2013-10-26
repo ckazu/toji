@@ -9,7 +9,7 @@ def remove_comment_lines(file)
 end
 
 # first commit
-file 'README.md', 'README'
+file 'README.md', "# #{app_name}"
 git :init
 git add: 'README.md'
 git commit: "-m 'initial commit'"
