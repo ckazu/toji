@@ -1,6 +1,6 @@
 # toji
 
-rails 4 application template
+rails 4 application template --skip-bundle -T
 
 # USAGE
 
