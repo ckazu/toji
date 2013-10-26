@@ -21,6 +21,8 @@ gem_group :development, :test do
   gem 'shoulda-matchers'
   gem 'factory_girl_rails'
   gem 'ffaker'
+  gem 'timecop'
+  gem 'database_rewinder'
   # auto run
   gem 'guard-rspec'
   gem 'spring'
@@ -28,16 +30,16 @@ gem_group :development, :test do
   gem 'coveralls', require: false
   # server
   gem 'puma'
-  # debug
+  gem 'quiet_assets'
+  # misc
+  gem 'tapp'
+  gem 'awesome_print'
   gem 'pry-rails'
   gem 'better_errors'
   gem 'binding_of_caller'
 end
 
 run 'bundle install'
-
 generate 'rspec:install'
-
 run 'bundle exec guard init rspec'
-
 commit "add development Gemfiles"
