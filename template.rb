@@ -3,6 +3,11 @@ def commit(message)
   git commit: "-m '#{message}'"
 end
 
+def remove_comment_lines(file)
+  gsub_file file, /^( )*#\s.*$/, ''
+  gsub_file file, /(\n)+/m, "\n"
+end
+
 # first commit
 file 'README.md', 'README'
 git :init
@@ -11,6 +16,9 @@ git commit: "-m 'initial commit'"
 
 # commit initial rails files
 run "rm README.rdoc"
+%w|Gemfile config/routes.rb|.each do |file|
+  remove_comment_lines file
+end
 
 commit "rails new #{app_name}"
 
