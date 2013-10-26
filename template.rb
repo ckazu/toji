@@ -12,7 +12,7 @@ git commit: "-m 'initial commit'"
 # commit initial rails files
 run "rm README.rdoc"
 
-commit "rails new"
+commit "rails new #{app_name}"
 
 # Gemfiles
 gem_group :development, :test do
