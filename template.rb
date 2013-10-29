@@ -42,7 +42,7 @@ insert_into_file 'app/assets/javascripts/application.js', "//= require underscor
 insert_into_file 'app/assets/javascripts/application.js', "//= require underscore.string\n", before: '//= require_tree .'
 commit "Add libraly Gemfiles"
 
-remove_file 'app/views/layouts/application.html.erb'
+git rm: 'app/views/layouts/application.html.erb'
 generate 'bootstrap:install less'
 generate 'bootstrap:layout application fixed'
 insert_into_file 'app/assets/stylesheets/bootstrap_and_overrides.css.less', "body { padding-top: 60px };\n", after: "// @linkColor: #ff0000;\n"
