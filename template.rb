@@ -35,26 +35,15 @@ gem 'twitter-bootstrap-rails', branch: 'bootstrap3'
 
 run_bundle
 
-generate 'bootstrap:install less'
 insert_into_file 'app/assets/javascripts/application.js', "//= require underscore\n", before: '//= require_tree .'
 insert_into_file 'app/assets/javascripts/application.js', "//= require underscore.string\n", before: '//= require_tree .'
+commit "Add libraly Gemfiles"
 
-remove_file 'app/views/layout/application.html.erb'
-# [ToDo] replace above template
-create_file 'app/views/layout/application.html.haml' do
-<<-TEMPLATE
-!!! html
-%head
-  %title #{app_name}
-  = stylesheet_link_tag 'application', media: :all, 'data-turbolinks-track' => true
-  = javascript_include_tag 'application', 'data-turbolinks-track' => true
-  = csrf_meta_tags
-%body
-  = yield
-TEMPLATE
-end
-
-commit "add libraly Gemfiles"
+remove_file 'app/views/layouts/application.html.erb'
+generate 'bootstrap:install less'
+generate 'bootstrap:layout application fixed'
+insert_into_file 'app/assets/stylesheets/bootstrap_and_overrides.css.less', "body { padding-top: 60px };\n", after: "// @linkColor: #ff0000;\n"
+commit 'Introduce twitter-bootstrap'
 
 # Gemfiles
 gem_group :development, :test do
