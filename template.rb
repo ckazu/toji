@@ -25,7 +25,10 @@ commit "rails new #{app_name}"
 gsub_file 'Gemfile', /^group :doc do.*end$\n/m, ''
 gsub_file 'Gemfile', /^.*sass-rails.*\n/, ''
 
-gem 'rails-i18n', '~> 4.0.0.pre'
+gem 'rails-i18n', '~> 4.0.0'
+gem 'rails-config'
+# gem 'configatron'
+# gem 'settingslogic'
 gem 'haml-rails'
 gem 'less-rails'
 gem 'underscore-rails'
@@ -57,8 +60,12 @@ gem_group :development, :test do
   # auto run
   gem 'guard-rspec'
   gem 'spring'
-  # ci
+  # ci, metrics
   gem 'coveralls', require: false
+  gem 'rails_best_practices'
+  gem 'brakeman'
+  gem 'bullet'
+  # gem 'exception-notification'
   # server
   gem 'puma'
   gem 'quiet_assets'
@@ -70,7 +77,20 @@ gem_group :development, :test do
   gem 'binding_of_caller'
 end
 
+insert_into_file 'config/environments/development.rb', after: "TestApp::Application.configure do\n" do
+<<-CONFIG
+  config.after_initialize do
+    Bullet.enable = true
+    Bullet.alert = true
+    Bullet.bullet_logger = true
+    Bullet.console = true
+    Bullet.growl = false
+    Bullet.rails_logger = true
+  end
+CONFIG
+end
+
 run_bundle
 generate 'rspec:install'
 run 'bundle exec guard init rspec'
-commit "add development Gemfiles"
+commit "Add development Gemfiles"
